@@ -1,0 +1,2 @@
+# Chat-App ReactJs
+A real-time chat application built with React.js that allows users to sign in, send and receive messages instantly, and see active participants in a clean, responsive UI. The app uses Firebase for authentication and real-time database features, making it fast and reliable. Styled with Tailwind CSS the design adapts seamlessly across all screen sizes. Ideal for learning or demo purposes, this project showcases core React concepts like hooks, state management, and component-based architecture.
