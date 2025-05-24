@@ -26,8 +26,7 @@ const Login = () => {
         const userDoc = await getDoc(doc(db, "chatUsers", user.uid));
         const userData = userDoc.data();
         console.log("userData=>", userData);
-        const loginData = localStorage.setItem("formData",JSON.stringify(userData) 
-        );
+        const loginData = localStorage.setItem("formData",JSON.stringify(userData));
         console.log("loginData=>", loginData);
         message.success("Account Login successfully!");
         navigate("/");

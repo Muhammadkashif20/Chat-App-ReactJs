@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
 
 const ChatHome = () => {
+  const [inputValue, setInputValue] = useState("");
   const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
-
+  const handleSendMsg = () => {
+      console.log("Message sent:", inputValue);
+      setInputValue(""); 
+      const fetch=
+  }
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white">
       {/* Header */}
@@ -36,12 +41,14 @@ const ChatHome = () => {
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-4 flex items-center gap-3 shadow-inner">
         <input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           type="text"
           className="flex-1 px-4 py-3 border border-blue-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm bg-gray-50"
           placeholder="Type your message..."
         />
         <button className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-600 hover:to-blue-600 text-white p-3 rounded-full shadow transition">
-          <SendOutlined />
+          <SendOutlined onClick={handleSendMsg}/>
         </button>
       </div>
     </div>

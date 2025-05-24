@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import Sidebar from "../Sidebar"
-const Layout = () => {
+const Layout = () => {  
       const location=useLocation()
   const hideSidebar= location.pathname === '/login' && location.pathname === '/signup'
   return (

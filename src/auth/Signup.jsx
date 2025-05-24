@@ -27,7 +27,7 @@ const Signup = () => {
       const user = userCredential.user;
       console.log("User signed up: ", user);
 
-      await setDoc(doc(db, "users", user.uid), {
+      await setDoc(doc(db, "chatUsers", user.uid), {
         fullname: values.fullname,
         email: values.email,
         uid: user.uid,

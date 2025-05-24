@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
   const navigate= useNavigate();
   const formData = JSON.parse(localStorage.getItem("formData"));
+  console.log("formData=>",formData)
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
+  console.log("googleFormData=>",googleFormData)
     const handleLogout = () => {
     localStorage.removeItem("formData");
     navigate("/login");
   };
+  const userName = formData?.fullname || googleFormData?.displayName || "Guest";
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col">
       {/* Logo / Title */}
@@ -23,7 +26,7 @@ const Sidebar = () => {
           <UserOutlined />
         </div>
         <div>
-          <h4 className="font-semibold text-gray-800">Kashif</h4>
+          <h4 className="font-semibold text-gray-800">{userName}</h4>
           <p className="text-sm text-green-500">● Online</p>
         </div>
       </div>
