@@ -1,25 +1,23 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes,  } from 'react-router-dom'
 import ChatHome from './ChatHome'
-import Sidebar from './Sidebar'
-
-import ProtectedRoute from './ProtectedRoute'
 import Signup from './auth/Signup'
 import Login from './auth/Login'
+import Layout from './auth/Layout'
 
 const App = () => {
+
   return (
     <div>
       <BrowserRouter>
         <div style={{ display: 'flex', height: '100vh' }}>
-        <div style={{ width: '250px', borderRight: '1px solid #ddd' }}>
-          <Sidebar />
-        </div>
+       
+         <Layout/>
         <div style={{ flex: 1 }}>
       <Routes>
         <Route path="/" element={<ChatHome />} />
-        <Route path="/login" element={ <ProtectedRoute><Login  /></ProtectedRoute>} />
-        <Route path="/signup" element={ <ProtectedRoute><Signup /></ProtectedRoute>} />
+        <Route path="/login" element={ <Login  /> }/>
+        <Route path="/signup" element={ <Signup /> }/>
       </Routes>
     </div>
         </div>

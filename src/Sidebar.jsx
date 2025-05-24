@@ -1,10 +1,17 @@
 import React from 'react';
 import { UserOutlined, MessageOutlined, SettingOutlined, LogoutOutlined, LoginOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+  const navigate= useNavigate();
+  const formData = JSON.parse(localStorage.getItem("formData"));
+  const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
+    const handleLogout = () => {
+    localStorage.removeItem("formData");
+    navigate("/login");
+  };
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col">
-      
       {/* Logo / Title */}
       <div className="px-6 py-5 text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow">
         💬 M.K Chatapp
@@ -31,10 +38,23 @@ const Sidebar = () => {
           <SettingOutlined />
           <span>Settings</span>
         </div>
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100   cursor-pointer transition-all">
-          <LoginOutlined />
-          <span>Login</span>
-        </div>
+        {googleFormData || formData ? (
+          <div
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 cursor-pointer transition-all text-red-600"
+            onClick={handleLogout}
+          >
+            <LogoutOutlined />
+            <span>Logout</span>
+          </div>
+        ) : (
+          <div
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"
+            onClick={() => navigate("/login")}
+          >
+            <LoginOutlined />
+            <span>Login</span>
+          </div>
+        )}
       </div>
     </div>
   );

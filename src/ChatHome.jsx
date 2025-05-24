@@ -1,13 +1,19 @@
-import React from 'react';
-import { SendOutlined } from '@ant-design/icons';
+import React from "react";
+import { SendOutlined } from "@ant-design/icons";
 
 const ChatHome = () => {
+  const formData = JSON.parse(localStorage.getItem("formData"));
+  const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
+  const userName = formData?.fullname || googleFormData?.displayName || "Guest";
+
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white">
-      
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-5 shadow-md text-2xl font-bold tracking-wide">
-        🤖 AI Chat Assistant
+      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-5 shadow-md text-2xl font-bold tracking-wide flex justify-between items-center">
+        <span>🤖 AI Chat Assistant</span>
+        <span className="text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
+          👤 {userName}
+        </span>
       </div>
 
       {/* Chat messages */}

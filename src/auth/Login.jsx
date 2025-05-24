@@ -23,13 +23,13 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log("User signed in: ", user);
-        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userDoc = await getDoc(doc(db, "chatUsers", user.uid));
         const userData = userDoc.data();
         console.log("userData=>", userData);
         const loginData = localStorage.setItem("formData",JSON.stringify(userData) 
         );
-        message.success("Login successful!");
         console.log("loginData=>", loginData);
+        message.success("Account Login successfully!");
         navigate("/");
       })
       .catch((error) => {
@@ -46,12 +46,12 @@ const Login = () => {
       .then(async (result) => {
         const user = result.user;
         console.log("User signed in with Result Google: ", result.user);
-        await setDoc(doc(db, "googleUsers", user.uid), {
+        await setDoc(doc(db, "chatgoogleUsers", user.uid), {
                 displayName: user.displayName,
                 email: user.email,
                 uid: user.uid,
               });
-        const userDoc = await getDoc(doc(db, "googleUsers", user.uid));
+        const userDoc = await getDoc(doc(db, "chatgoogleUsers", user.uid));
           const googleUserData = userDoc.data();
           console.log("googleUserData=>", googleUserData);
           const loginData = localStorage.setItem("googleFormData",JSON.stringify(googleUserData));
