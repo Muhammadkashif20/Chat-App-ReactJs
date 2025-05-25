@@ -11,18 +11,28 @@ const ChatHome = () => {
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
   const handleSendMsg = async() => {
+      if (!inputValue.trim()) return;
       console.log("Message sent:", inputValue);
-       setMessages(prev => [...prev, inputValue]); 
+        const userMessage = { sender: "user", text: inputValue };
+        const userInput = inputValue;
         setInputValue("");
-
-const ai = new GoogleGenAI({ apiKey:APIKey});
-  const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: "Explain how AI works in a few words",
-  });
-  console.log("Response from AI:", response);
-  console.log(response.text);
-  setMessages(response.text);
+        setMessages(prev => [...prev, userMessage]); 
+        try {
+          const ai = new GoogleGenAI({ apiKey:APIKey});
+          const response = await ai.models.generateContent({
+            model: "gemini-1.5-flash",
+           contents:userInput
+          });
+          const text = response.text
+          console.log("AI result:", response);
+          console.log("Text from AI:", text);
+         const aiMessage = { sender: "ai", text: text };
+          setMessages(prev => [...prev, aiMessage]);
+        } catch (error) {
+          console.error("Error generating AI response:", error);
+            const errorMessage = { sender: "ai", text: "AI se response nahi aya." };
+            setMessages(prev => [...prev, errorMessage]);
+        }
 }
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white">
@@ -37,17 +47,26 @@ const ai = new GoogleGenAI({ apiKey:APIKey});
       {/* Chat messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-5">
         {/* User Message */}
-        <div className="flex justify-end">
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-3xl max-w-[75%] text-sm shadow-md">
-            {inputValue}
-          </div>
-        </div>
+        {/* AI Messages */}
+<div className="flex-1 overflow-y-auto p-6 space-y-5">
+  {messages.map((msg, index) => (
+    <div
+      key={index}
+      className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+    >
+      <div
+        className={`px-6 py-3 rounded-3xl max-w-[75%] text-sm shadow-md ${
+          msg.sender === "user"
+            ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
+            : "bg-white border border-blue-100 text-gray-700"
+        }`}
+      >
+        {msg.text}
+      </div>
+    </div>
+  ))}
+</div>
 
-          <div className="flex justify-start">
-          <div className="bg-white border border-blue-100 px-6 py-3 rounded-3xl max-w-[75%] text-gray-700 text-sm shadow-sm">
-            {messages}
-          </div>
-        </div>
       </div>
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-4 flex items-center gap-3 shadow-inner">
