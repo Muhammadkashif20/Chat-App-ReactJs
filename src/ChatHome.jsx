@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { GoogleGenAI } from "@google/genai";
+import APIKey from "./auth/Apikey";
 
 const ChatHome = () => {
   const [inputValue, setInputValue] = useState("");
+  const [messages, setMessages] = useState([]);
   const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
-  const handleSendMsg = () => {
+  const handleSendMsg = async() => {
       console.log("Message sent:", inputValue);
-      setInputValue(""); 
-      const fetch=
-  }
+       setMessages(prev => [...prev, inputValue]); 
+        setInputValue("");
+
+const ai = new GoogleGenAI({ apiKey:APIKey});
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works in a few words",
+  });
+  console.log("Response from AI:", response);
+  console.log(response.text);
+  setMessages(response.text);
+}
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white">
       {/* Header */}
@@ -26,18 +39,16 @@ const ChatHome = () => {
         {/* User Message */}
         <div className="flex justify-end">
           <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-3xl max-w-[75%] text-sm shadow-md">
-            Hello! How can you help me?
+            {inputValue}
           </div>
         </div>
 
-        {/* AI Message */}
-        <div className="flex justify-start">
+          <div className="flex justify-start">
           <div className="bg-white border border-blue-100 px-6 py-3 rounded-3xl max-w-[75%] text-gray-700 text-sm shadow-sm">
-            I'm here to assist you with anything. Just ask!
+            {messages}
           </div>
         </div>
       </div>
-
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-4 flex items-center gap-3 shadow-inner">
         <input
