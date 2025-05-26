@@ -33,11 +33,11 @@ const Sidebar = () => {
 
       {/* Navigation Items */}
       <div className="flex-1 p-5 space-y-3 text-gray-800 font-medium">
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all">
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/chatHome")}>
           <MessageOutlined />
           <span>Chats</span>
         </div>
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all">
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/settings")}>
           <SettingOutlined />
           <span>Settings</span>
         </div>

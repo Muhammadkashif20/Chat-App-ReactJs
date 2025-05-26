@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import { GoogleGenAI } from "@google/genai";
 import APIKey from "../auth/Apikey";
+import { formatMessageContent } from "./FormatMessage";
 
 const ChatHome = () => {
   const [inputValue, setInputValue] = useState("");
@@ -60,7 +61,7 @@ const ChatHome = () => {
             : "bg-white border border-blue-100 text-gray-700"
         }`}
       >
-        {msg.text}
+        {formatMessageContent(msg.text)}
       </div>
     </div>
   ))}

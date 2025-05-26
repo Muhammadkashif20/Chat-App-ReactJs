@@ -5,6 +5,7 @@ import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Layout from "./auth/Layout";
 import Loader from "./Components/Loader";
+import Settings from "./Components/Settings";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,7 @@ const App = () => {
           <div style={{ flex: 1 }}>
             <Routes>
               <Route path="/chatHome" element={<ChatHome />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Routes>
