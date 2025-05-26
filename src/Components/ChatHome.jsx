@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
-import axios from "axios";
 import { GoogleGenAI } from "@google/genai";
-import APIKey from "./auth/Apikey";
+import APIKey from "../auth/Apikey";
 
 const ChatHome = () => {
   const [inputValue, setInputValue] = useState("");
@@ -71,6 +70,12 @@ const ChatHome = () => {
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-4 flex items-center gap-3 shadow-inner">
         <input
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSendMsg();
+            }}
+          }
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           type="text"

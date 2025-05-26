@@ -34,7 +34,7 @@ const Signup = () => {
       });
 
       message.success("Account created successfully!");
-      navigate("/login");
+      navigate("/");
       }    
       catch (error) {
       console.log("Error code: ", error.code);
@@ -124,7 +124,7 @@ const Signup = () => {
           {/* Login Link */}
           <div className="text-center text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to="/login" className="text-blue-500 hover:underline">
+            <Link to="/" className="text-blue-500 hover:underline">
               Log in
             </Link>
           </div>
