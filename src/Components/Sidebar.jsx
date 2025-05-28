@@ -10,7 +10,8 @@ const Sidebar = () => {
   console.log("googleFormData=>",googleFormData)
     const handleLogout = () => {
     localStorage.removeItem("formData");
-    navigate("/login");
+    localStorage.removeItem("googleFormData");
+    navigate("/");
   };
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
   return (
@@ -37,7 +38,7 @@ const Sidebar = () => {
           <MessageOutlined />
           <span>Chats</span>
         </div>
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/settings")}>
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/settings")} >
           <SettingOutlined />
           <span>Settings</span>
         </div>
@@ -52,7 +53,7 @@ const Sidebar = () => {
         ) : (
           <div
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
           >
             <LoginOutlined />
             <span>Login</span>

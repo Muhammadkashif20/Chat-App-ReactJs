@@ -1,7 +1,7 @@
 import React from "react";
 
 export const formatMessageContent = (text) => {
-  const parts = text.split("```"); // code blocks detected
+  const parts = text.split("```"); 
   return parts.map((part, index) => {
     if (index % 2 === 1) {
       return (
@@ -14,7 +14,7 @@ export const formatMessageContent = (text) => {
       );
     } else {
       return (
-        <p key={index} className="whitespace-pre-wrap text-sm text-gray-800 my-2">
+        <p key={index} className="whitespace-pre-wrap text-sm my-2">
           {part.trim()}
         </p>
       );

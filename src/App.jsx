@@ -6,9 +6,12 @@ import Login from "./auth/Login";
 import Layout from "./auth/Layout";
 import Loader from "./Components/Loader";
 import Settings from "./Components/Settings";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
+    const formData = JSON.parse(localStorage.getItem("formData"));
+  const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -24,8 +27,8 @@ const App = () => {
           <Layout />
           <div style={{ flex: 1 }}>
             <Routes>
-              <Route path="/chatHome" element={<ChatHome />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/chatHome" element={<ProtectedRoute><ChatHome /></ProtectedRoute>} />
+              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Routes>
