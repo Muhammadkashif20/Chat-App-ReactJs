@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   PaperClipOutlined,
   SendOutlined,
@@ -7,20 +7,26 @@ import {
 import { GoogleGenAI } from "@google/genai";
 import APIKey from "../auth/Apikey";
 import { formatMessageContent } from "./FormatMessage";
+import { message } from "antd";
 
 const ChatHome = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isSending, setIsSending] = useState(false); // New state
+  const [isSending, setIsSending] = useState(false);
 
+  const fileInputRef = useRef(null); // ✅ Moved inside ChatHome
   const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
 
   const handleSendMsg = async () => {
-    if (!inputValue.trim() || isSending) return;
+    if (!inputValue.trim() || isSending) {
+      console.log("Input is empty or already sending.");
+      message.error("Message cannot be empty.");
+      return;
+    }
 
-    setIsSending(true); // Sending start
+    setIsSending(true);
     console.log("Message sent:", inputValue);
     const userMessage = { sender: "user", text: inputValue };
     const userInput = inputValue;
@@ -44,14 +50,35 @@ const ChatHome = () => {
       setMessages((prev) => [...prev, errorMessage]);
     }
 
-    setIsSending(false); // Sending done
+    setIsSending(false);
+  };
+
+  const handleFileClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    console.log("File selected:", file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      console.log("Base64 String:", base64String);
+      const fileMessage = {
+        sender: "user",
+        text: base64String,
+        type: "image",
+      };
+      setMessages((prev) => [...prev, fileMessage]);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white w-full">
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-5 shadow-md text-2xl font-bold tracking-wide flex justify-between items-center">
-        <span>🤖 AI Chat Assistant</span>
+        <span>🤖 AI Gemini Assistant</span>
         <span className="text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
           👤 {userName}
         </span>
@@ -73,7 +100,15 @@ const ChatHome = () => {
                   : "bg-white border border-blue-100 text-gray-800"
               }`}
             >
-              {formatMessageContent(msg.text)}
+              {msg.type === "image" ? (
+                <img
+                  src={msg.text}
+                  alt="Uploaded"
+                  className="max-w-full rounded-lg"
+                />
+              ) : (
+                formatMessageContent(msg.text)
+              )}
             </div>
           </div>
         ))}
@@ -82,7 +117,16 @@ const ChatHome = () => {
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-5 shadow-inner">
         <div className="flex items-center gap-3 relative">
-          <span className="absolute left-4 text-blue-500 text-xl">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+          <span
+            className="absolute left-4 text-blue-500 text-xl cursor-pointer"
+            onClick={handleFileClick}
+          >
             <PaperClipOutlined />
           </span>
 
@@ -98,13 +142,13 @@ const ChatHome = () => {
             type="text"
             className="flex-1 pl-12 pr-12 py-5 border border-blue-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm bg-gray-50"
             placeholder="Type your message..."
-            disabled={isSending} // Input disable during sending (optional)
+            disabled={isSending}
           />
 
           <button
             onClick={handleSendMsg}
             className="absolute right-4 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-600 hover:to-blue-600 text-white px-3 py-2 rounded-full shadow transition"
-            disabled={isSending} // Disable button while sending
+            disabled={isSending}
           >
             {isSending ? (
               <div className="w-6 h-6 bg-white rounded-md animate-pulse flex items-center justify-center text-blue-600 font-semibold text-xs">

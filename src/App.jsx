@@ -7,7 +7,7 @@ import Layout from "./auth/Layout";
 import Loader from "./Components/Loader";
 import Settings from "./Components/Settings";
 import ProtectedRoute from "./Components/ProtectedRoute";
-
+import '@ant-design/v5-patch-for-react-19';
 const App = () => {
   const [loading, setLoading] = useState(true);
     const formData = JSON.parse(localStorage.getItem("formData"));
