@@ -38,7 +38,7 @@ const Sidebar = () => {
           <MessageOutlined />
           <span>Chats</span>
         </div>
-        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/settings")} >
+        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/profile")} >
           <SettingOutlined />
           <span>Settings</span>
         </div>

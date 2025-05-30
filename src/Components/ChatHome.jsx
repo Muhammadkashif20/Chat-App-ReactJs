@@ -5,7 +5,7 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import { GoogleGenAI } from "@google/genai";
-import APIKey from "../auth/Apikey";
+// import APIKey from "../auth/Apikey";
 import { formatMessageContent } from "./FormatMessage";
 import { message } from "antd";
 
@@ -32,47 +32,8 @@ const ChatHome = () => {
     const userInput = inputValue;
     setInputValue("");
     setMessages((prev) => [...prev, userMessage]);
-
-    try {
-      const ai = new GoogleGenAI({ apiKey: APIKey });
-      const response = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
-        contents: userInput,
-      });
-      const text = response.text;
-      console.log("AI result:", response);
-      console.log("Text from AI:", text);
-      const aiMessage = { sender: "ai", text: text };
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      console.error("Error generating AI response:", error);
-      const errorMessage = { sender: "ai", text: "AI se response nahi aya." };
-      setMessages((prev) => [...prev, errorMessage]);
-    }
-
-    setIsSending(false);
   };
 
-  const handleFileClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    console.log("File selected:", file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result;
-      console.log("Base64 String:", base64String);
-      const fileMessage = {
-        sender: "user",
-        text: base64String,
-        type: "image",
-      };
-      setMessages((prev) => [...prev, fileMessage]);
-    };
-    reader.readAsDataURL(file);
-  };
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white w-full">
@@ -117,18 +78,6 @@ const ChatHome = () => {
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-5 shadow-inner">
         <div className="flex items-center gap-3 relative">
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          <span
-            className="absolute left-4 text-blue-500 text-xl cursor-pointer"
-            onClick={handleFileClick}
-          >
-            <PaperClipOutlined />
-          </span>
 
           <input
             onKeyDown={(e) => {

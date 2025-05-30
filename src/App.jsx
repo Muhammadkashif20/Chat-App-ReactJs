@@ -5,9 +5,9 @@ import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Layout from "./auth/Layout";
 import Loader from "./Components/Loader";
-import Settings from "./Components/Settings";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import '@ant-design/v5-patch-for-react-19';
+import Profile from "./Components/Profile";
 const App = () => {
   const [loading, setLoading] = useState(true);
     const formData = JSON.parse(localStorage.getItem("formData"));
@@ -28,7 +28,7 @@ const App = () => {
           <div style={{ flex: 1 }}>
             <Routes>
               <Route path="/chatHome" element={<ProtectedRoute><ChatHome /></ProtectedRoute>} />
-              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Routes>
