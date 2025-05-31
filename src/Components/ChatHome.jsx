@@ -1,51 +1,64 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
-  PaperClipOutlined,
   SendOutlined,
+  PaperClipOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
 import { GoogleGenAI } from "@google/genai";
-// import APIKey from "../auth/Apikey";
+import APIKey from "../auth/Apikey";
 import { formatMessageContent } from "./FormatMessage";
-import { message } from "antd";
 
 const ChatHome = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [isSending, setIsSending] = useState(false);
 
-  const fileInputRef = useRef(null); // ✅ Moved inside ChatHome
   const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
 
   const handleSendMsg = async () => {
-    if (!inputValue.trim() || isSending) {
-      console.log("Input is empty or already sending.");
-      message.error("Message cannot be empty.");
-      return;
-    }
+    if (!inputValue.trim() || isSending) return;
 
     setIsSending(true);
-    console.log("Message sent:", inputValue);
     const userMessage = { sender: "user", text: inputValue };
     const userInput = inputValue;
     setInputValue("");
     setMessages((prev) => [...prev, userMessage]);
+    localStorage.setItem("UserMessage", JSON.stringify(userMessage));
+    try {
+      const ai = new GoogleGenAI({ apiKey: APIKey });
+      const response = await ai.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: userInput,
+      });
+      const text = response.text || "No response received.";
+      const aiMessage = { sender: "ai", text };
+      setMessages((prev) => [...prev, aiMessage]);
+      localStorage.setItem("AIResponse", JSON.stringify(aiMessage));
+    } catch (error) {
+      console.error("Error generating AI response:", error);
+      const errorMessage = {
+        sender: "ai",
+        text: "AI se response nahi aya.",
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsSending(false);
+    }
   };
-
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white w-full">
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-5 shadow-md text-2xl font-bold tracking-wide flex justify-between items-center">
-        <span>🤖 AI Gemini Assistant</span>
-        <span className="text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
+        <span>🤖 AI Chat Assistant</span>
+          <span className="text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
           👤 {userName}
         </span>
       </div>
 
-      {/* Chat messages */}
+      {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-5">
         {messages.map((msg, index) => (
           <div
@@ -61,15 +74,7 @@ const ChatHome = () => {
                   : "bg-white border border-blue-100 text-gray-800"
               }`}
             >
-              {msg.type === "image" ? (
-                <img
-                  src={msg.text}
-                  alt="Uploaded"
-                  className="max-w-full rounded-lg"
-                />
-              ) : (
-                formatMessageContent(msg.text)
-              )}
+              {formatMessageContent(msg.text)}
             </div>
           </div>
         ))}
@@ -78,6 +83,9 @@ const ChatHome = () => {
       {/* Input Area */}
       <div className="border-t bg-white px-4 py-5 shadow-inner">
         <div className="flex items-center gap-3 relative">
+          <span className="absolute left-4 text-blue-500 text-xl">
+            <PaperClipOutlined />
+          </span>
 
           <input
             onKeyDown={(e) => {
