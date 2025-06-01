@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SendOutlined,
   PaperClipOutlined,
-  LoadingOutlined,
 } from "@ant-design/icons";
 import { GoogleGenAI } from "@google/genai";
 import APIKey from "../auth/Apikey";
@@ -25,35 +24,47 @@ const ChatHome = () => {
     const userInput = inputValue;
     setInputValue("");
     setMessages((prev) => [...prev, userMessage]);
-    localStorage.setItem("UserMessage", JSON.stringify(userMessage));
+    console.log("User Message:", userMessage);
+
     try {
       const ai = new GoogleGenAI({ apiKey: APIKey });
       const response = await ai.models.generateContent({
         model: "gemini-1.5-flash",
         contents: userInput,
       });
+
       const text = response.text || "No response received.";
       const aiMessage = { sender: "ai", text };
-      setMessages((prev) => [...prev, aiMessage]);
-      localStorage.setItem("AIResponse", JSON.stringify(aiMessage));
-    } catch (error) {
+      console.log("AI Response:", aiMessage);
+      setMessages((prev) =>[...prev, aiMessage]);
+      const allMessages=[...messages,userMessage,aiMessage]
+      setMessages(allMessages);
+      localStorage.setItem("allMessages", JSON.stringify(allMessages));
+    } 
+    
+    catch (error) {
       console.error("Error generating AI response:", error);
       const errorMessage = {
         sender: "ai",
         text: "AI se response nahi aya.",
       };
       setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setIsSending(false);
-    }
+    } 
+
+    setIsSending(false);
   };
 
+  useEffect(()=>{
+    const getMessages=JSON.parse(localStorage.getItem("allMessages"))
+    console.log("Messages from localStorage:", getMessages);
+    setMessages(getMessages);
+  },[])
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white w-full">
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-5 shadow-md text-2xl font-bold tracking-wide flex justify-between items-center">
         <span>🤖 AI Chat Assistant</span>
-          <span className="text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
+        <span className="text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
           👤 {userName}
         </span>
       </div>

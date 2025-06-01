@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserOutlined, MessageOutlined, SettingOutlined, LogoutOutlined, LoginOutlined } from '@ant-design/icons';
+import { UserOutlined, MessageOutlined, SettingOutlined, LogoutOutlined, LoginOutlined, ProfileOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -39,8 +39,8 @@ const Sidebar = () => {
           <span>Chats</span>
         </div>
         <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"  onClick={() => navigate("/profile")} >
-          <SettingOutlined />
-          <span>Settings</span>
+          <UserOutlined />
+          <span>Profile</span>
         </div>
         {googleFormData || formData ? (
           <div
