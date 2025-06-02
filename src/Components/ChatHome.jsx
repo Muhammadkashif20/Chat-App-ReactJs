@@ -15,6 +15,7 @@ const ChatHome = () => {
   const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
+  const userEmail = formData?.email || googleFormData?.email || "Guest";
 
   const handleSendMsg = async () => {
     if (!inputValue.trim() || isSending) return;
@@ -23,8 +24,6 @@ const ChatHome = () => {
     const userMessage = { sender: "user", text: inputValue };
     const userInput = inputValue;
     setInputValue("");
-    setMessages((prev) => [...prev, userMessage]);
-    console.log("User Message:", userMessage);
 
     try {
       const ai = new GoogleGenAI({ apiKey: APIKey });
@@ -36,11 +35,10 @@ const ChatHome = () => {
       const text = response.text || "No response received.";
       const aiMessage = { sender: "ai", text };
       console.log("AI Response:", aiMessage);
-      setMessages((prev) =>[...prev, aiMessage]);
       const allMessages=[...messages,userMessage,aiMessage]
       setMessages(allMessages);
-      localStorage.setItem("allMessages", JSON.stringify(allMessages));
-    } 
+      localStorage.setItem(`Chat - ${userEmail}`, JSON.stringify(allMessages));
+    }   
     
     catch (error) {
       console.error("Error generating AI response:", error);
@@ -55,7 +53,7 @@ const ChatHome = () => {
   };
 
   useEffect(()=>{
-    const getMessages=JSON.parse(localStorage.getItem("allMessages"))
+    const getMessages=JSON.parse(localStorage.getItem(`Chat - ${userEmail}`))
     console.log("Messages from localStorage:", getMessages);
     setMessages(getMessages);
   },[])
@@ -71,7 +69,7 @@ const ChatHome = () => {
 
       {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-5">
-        {messages.map((msg, index) => (
+        {messages?.map((msg, index) => (
           <div
             key={index}
             className={`flex ${
@@ -92,7 +90,7 @@ const ChatHome = () => {
       </div>
 
       {/* Input Area */}
-      <div className="border-t bg-white px-4 py-5 shadow-inner">
+      <div className="border-gray-900 bg-white px-4 py-5 shadow-inner">
         <div className="flex items-center gap-3 relative">
           <span className="absolute left-4 text-blue-500 text-xl">
             <PaperClipOutlined />
@@ -108,7 +106,7 @@ const ChatHome = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             type="text"
-            className="flex-1 pl-12 pr-12 py-5 border border-blue-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm bg-gray-50"
+            className="flex-1 pl-12 pr-12 py-5 border border-blue-200 r ounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm bg-gray-50"
             placeholder="Type your message..."
             disabled={isSending}
           />
