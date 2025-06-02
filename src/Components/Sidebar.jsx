@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserOutlined, MessageOutlined, SettingOutlined, LogoutOutlined, LoginOutlined, ProfileOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { Avatar } from 'antd';
 
 const Sidebar = () => {
   const navigate= useNavigate();
@@ -14,6 +15,8 @@ const Sidebar = () => {
     navigate("/");
   };
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
+  const userPhoto = googleFormData?.photoURL || null;
+
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col">
       {/* Logo / Title */}
@@ -23,9 +26,14 @@ const Sidebar = () => {
 
       {/* User Profile */}
       <div className="flex items-center gap-4 px-5 py-4 border-b border-blue-100 bg-white shadow-sm">
-        <div className="w-12 h-12 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center text-xl">
-          <UserOutlined />
-        </div>
+        {/* <div className="w-12 h-12 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center text-xl"> */}
+           <Avatar
+              size={48}
+              src={userPhoto}
+              icon={!userPhoto && <UserOutlined />}
+              className="border-4 border-white shadow-md"
+            />
+        {/* </div> */}
         <div>
           <h4 className="font-semibold text-gray-800">{userName}</h4>
           <p className="text-sm text-green-500">● Online</p>

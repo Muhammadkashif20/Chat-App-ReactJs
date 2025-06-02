@@ -8,7 +8,7 @@ const Loader = () => {
     <>
       {loading ? (
         <div className="flex justify-center items-center h-screen bg-white">
-          <Spin tip="Loading..." size="large" />
+          <Spin  size="large" />
         </div>
       ) : (
         <Login/>

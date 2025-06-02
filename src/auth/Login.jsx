@@ -52,6 +52,7 @@ const Login = () => {
           displayName: user.displayName,
           email: user.email,
           uid: user.uid,
+          photoURL: user.photoURL,
         });
         const userDoc = await getDoc(doc(db, "chatgoogleUsers", user.uid));
         const googleUserData = userDoc.data();
