@@ -10,8 +10,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'antd';
 
-const Sidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+const Sidebar = ({isSidebarOpen,setIsSidebarOpen}) => {
   const navigate = useNavigate();
   const formData = JSON.parse(localStorage.getItem('formData'));
   const googleFormData = JSON.parse(localStorage.getItem('googleFormData'));

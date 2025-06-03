@@ -9,6 +9,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import '@ant-design/v5-patch-for-react-19';
 import Profile from "./Components/Profile";
 const App = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [loading, setLoading] = useState(true);
     const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
@@ -24,10 +25,10 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div style={{ display: "flex", height: "100vh" }}>
-          <Layout />
+          <Layout isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
           <div style={{ flex: 1 }}>
             <Routes>
-              <Route path="/chatHome" element={<ProtectedRoute><ChatHome /></ProtectedRoute>} />
+              <Route path="/chatHome" element={<ProtectedRoute><ChatHome  isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

@@ -7,7 +7,7 @@ import { GoogleGenAI } from "@google/genai";
 import APIKey from "../auth/Apikey";
 import { formatMessageContent } from "./FormatMessage";
 
-const ChatHome = () => {
+const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [isSending, setIsSending] = useState(false);
@@ -58,7 +58,7 @@ const ChatHome = () => {
     setMessages(getMessages);
   },[])
   return (
-    <div className="flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white w-full">
+    <div className={`flex flex-col h-full bg-gradient-to-br from-indigo-100 via-blue-100 to-white  ${isSidebarOpen ? "ml-0" : "ml-[-10rem]"}`}>
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-6 py-5 shadow-md text-2xl font-bold tracking-wide flex justify-between items-center">
         <span>🤖 AI Chat Assistant</span>
