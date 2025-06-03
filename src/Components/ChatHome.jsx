@@ -90,7 +90,7 @@ const ChatHome = () => {
       </div>
 
       {/* Input Area */}
-      <div className="border-gray-900 bg-white px-4 py-5 shadow-inner">
+      <div className="border-gray-900 bg-white px-4 py-4 shadow-inner">
         <div className="flex items-center gap-3 relative">
           <span className="absolute left-4 text-blue-500 text-xl">
             <PaperClipOutlined />

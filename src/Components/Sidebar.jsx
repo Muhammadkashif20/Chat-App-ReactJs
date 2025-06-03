@@ -2,44 +2,42 @@ import React, { useState } from 'react';
 import {
   UserOutlined,
   MessageOutlined,
-  SettingOutlined,
   LogoutOutlined,
   LoginOutlined,
-  ProfileOutlined,
-  LeftOutlined,
-  RightOutlined
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'antd';
 
 const Sidebar = () => {
-  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const navigate = useNavigate();
+  const formData = JSON.parse(localStorage.getItem('formData'));
+  const googleFormData = JSON.parse(localStorage.getItem('googleFormData'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('formData');
+    localStorage.removeItem('googleFormData');
+    navigate('/');
+  };
+
+  const userName = formData?.fullname || googleFormData?.displayName || 'Guest';
+  const userPhoto = googleFormData?.photoURL || null;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const formData = JSON.parse(localStorage.getItem("formData"));
-  const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
-  const handleLogout = () => {
-    localStorage.removeItem("formData");
-    localStorage.removeItem("googleFormData");
-    navigate("/");
-  };
-  const userName = formData?.fullname || googleFormData?.displayName || "Guest";
-  const userPhoto = googleFormData?.photoURL || null;
-
   return (
     <div
       className={`${
-        isSidebarOpen ? "w-64" : "w-20"
-      } transition-all duration-300 h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col relative`}
+        isSidebarOpen ? 'w-64' : 'w-24'
+      } h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col relative transition-all duration-300 `}
     >
-      {/* Logo */}
-      <div className="px-6 py-5 text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow text-center">
-        💬
-        {isSidebarOpen && <span className="ml-2">M.K ChatApp</span>}
+      {/* Logo / Title */}
+      <div className="px-6 py-5 text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow whitespace-nowrap overflow-hidden">
+        <span className="px-2">💬</span>{isSidebarOpen && ' M.K ChatApp'}
       </div>
 
       {/* User Profile */}
@@ -51,32 +49,32 @@ const Sidebar = () => {
           className="border-4 border-white shadow-md"
         />
         {isSidebarOpen && (
-          <div>
+          <div className="whitespace-nowrap overflow-hidden">
             <h4 className="font-semibold text-gray-800">{userName}</h4>
             <p className="text-sm text-green-500">● Online</p>
           </div>
         )}
       </div>
 
-      {/* Navigation */}
-      <div className="flex-1 p-5 space-y-3 text-gray-800 font-medium">
+      {/* Navigation Items */}
+      <div className="flex-1 p-3 space-y-2 text-gray-800 font-medium">
         <div
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"
-          onClick={() => navigate("/chatHome")}
+          className={`flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all ${isSidebarOpen ? "justify-start" : "justify-center"}` }
+          onClick={() => navigate('/chatHome')}
         >
-          <MessageOutlined />
+          <MessageOutlined/>
           {isSidebarOpen && <span>Chats</span>}
         </div>
         <div
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"
-          onClick={() => navigate("/profile")}
+          className= {`flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all ${isSidebarOpen ? "justify-start" : "justify-center"}`}
+          onClick={() => navigate('/profile')}
         >
           <UserOutlined />
           {isSidebarOpen && <span>Profile</span>}
         </div>
         {googleFormData || formData ? (
           <div
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 cursor-pointer transition-all text-red-600"
+            className={`flex items-center gap-3 p-3 rounded-lg hover:bg-red-100 cursor-pointer transition-all text-red-600 ${isSidebarOpen ? "justify-start" : "justify-center"}`}
             onClick={handleLogout}
           >
             <LogoutOutlined />
@@ -85,7 +83,7 @@ const Sidebar = () => {
         ) : (
           <div
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-100 cursor-pointer transition-all"
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
           >
             <LoginOutlined />
             {isSidebarOpen && <span>Login</span>}
@@ -93,12 +91,13 @@ const Sidebar = () => {
         )}
       </div>
 
-      <div className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 sm:${!isSidebarOpen}`}>
+      {/* Toggle Button */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
         <button
           onClick={toggleSidebar}
-          className="text-xl p-3 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-blue-100 transition duration-300 relative group"
+          className="text-indigo-600 bg-white border border-indigo-200 shadow-md hover:bg-indigo-50 py-3 px-4 rounded-full transition-all"
         >
-          {isSidebarOpen ? <LeftOutlined /> : <RightOutlined />}
+          {isSidebarOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
         </button>
       </div>
     </div>
