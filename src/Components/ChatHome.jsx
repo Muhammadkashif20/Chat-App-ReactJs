@@ -6,8 +6,9 @@ import {
 import { GoogleGenAI } from "@google/genai";
 import APIKey from "../auth/Apikey";
 import { formatMessageContent } from "./FormatMessage";
+import { message } from "antd";
 
-const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
+const ChatHome = ({isSidebarOpen}) => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
   const [isSending, setIsSending] = useState(false);
@@ -18,8 +19,10 @@ const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
   const userEmail = formData?.email || googleFormData?.email || "Guest";
 
   const handleSendMsg = async () => {
-    if (!inputValue.trim() || isSending) return;
-
+    if(!inputValue.trim()){
+      message.error("Please enter a message before sending.");
+      return
+    }
     setIsSending(true);
     const userMessage = { sender: "user", text: inputValue };
     setMessages((prev) => [...(prev || []), userMessage]);
@@ -116,7 +119,7 @@ const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
 
           <button
             onClick={handleSendMsg}
-            className="absolute right-4 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-600 hover:to-blue-600 text-white px-3 py-2 rounded-full shadow transition"
+            className="absolute right-4 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-600 hover:to-blue-600 text-white px-3 py-2 rounded-full shadow transition cursor-pointer"
             disabled={isSending}
           >
             {isSending ? (

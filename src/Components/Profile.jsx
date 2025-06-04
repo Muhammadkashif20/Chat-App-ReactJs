@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar } from 'antd';
 import { UserOutlined, MailOutlined } from '@ant-design/icons';
 
-const Profile = () => {
+const Profile = ({isSidebarOpen}) => {
   const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   const userName = formData?.fullname || googleFormData?.displayName || "Guest";
@@ -10,7 +10,7 @@ const Profile = () => {
   const userPhoto = googleFormData?.photoURL || null;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className={`flex items-center justify-center min-h-screen bg-gray-50 ${isSidebarOpen ? "ml-0" : "ml-[-10rem]"}`}>
       <div className="w-full max-w-lg bg-white rounded-xl shadow-sm overflow-hidden">
         
         {/* Profile Header */}
