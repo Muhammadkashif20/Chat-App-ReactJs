@@ -35,25 +35,25 @@ const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
       const text = response.text || "No response received.";
       const aiMessage = { sender: "ai", text };
       console.log("AI Response:", aiMessage);
-      const allMessages=[...messages,userMessage,aiMessage]
+      const allMessages=[...(messages||[]),userMessage,aiMessage]
       setMessages(allMessages);
-      localStorage.setItem(`Chat - ${userEmail}`, JSON.stringify(allMessages));
+      localStorage.setItem(`Chat-${userEmail}`, JSON.stringify(allMessages));
     }   
     
     catch (error) {
       console.error("Error generating AI response:", error);
       const errorMessage = {
         sender: "ai",
-        text: "AI se response nahi aya.",
+        text: "Error generating AI response! Please try again later.",
       };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [...(prev || []), errorMessage]);
     } 
 
     setIsSending(false);
   };
 
   useEffect(()=>{
-    const getMessages=JSON.parse(localStorage.getItem(`Chat - ${userEmail}`))
+    const getMessages=JSON.parse(localStorage.getItem(`Chat-${userEmail}`))
     console.log("Messages from localStorage:", getMessages);
     setMessages(getMessages);
   },[])
