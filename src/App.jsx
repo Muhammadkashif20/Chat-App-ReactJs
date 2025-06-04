@@ -9,7 +9,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import '@ant-design/v5-patch-for-react-19';
 import Profile from "./Components/Profile";
 const App = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
     const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
