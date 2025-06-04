@@ -21,7 +21,7 @@ const Signup = () => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         values.email,
-        values.password,
+        values.password
       );
 
       const user = userCredential.user;
@@ -35,8 +35,7 @@ const Signup = () => {
 
       message.success("Account created successfully!");
       navigate("/");
-      }    
-      catch (error) {
+    } catch (error) {
       console.log("Error code: ", error.code);
       console.log("Error message: ", error.message);
       message.error(error.code);

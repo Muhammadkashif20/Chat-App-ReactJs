@@ -75,7 +75,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">      
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full  max-w-md bg-white p-10 rounded-2xl shadow-2xl transition-all duration-300">
         <Title level={2} className="text-center text-blue-600 mb-6">
           Welcome Back 👋

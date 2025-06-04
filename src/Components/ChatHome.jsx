@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  SendOutlined,
-  PaperClipOutlined,
-} from "@ant-design/icons";
+import { SendOutlined, PaperClipOutlined } from "@ant-design/icons";
 import { GoogleGenAI } from "@google/genai";
 import APIKey from "../auth/Apikey";
 import { formatMessageContent } from "./FormatMessage";
@@ -20,7 +17,7 @@ const ChatHome = ({ isSidebarOpen }) => {
 
   const handleSendMsg = async () => {
     if (!inputValue.trim()) {
-      message.error("Please enter a message before sending.");
+      message.error("Please enter a message before sending!");
       return;
     }
     setIsSending(true);
@@ -61,11 +58,17 @@ const ChatHome = ({ isSidebarOpen }) => {
   }, []);
 
   return (
-    <div className={`flex flex-col max-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-white transition-all duration-300 ${isSidebarOpen ? "ml-0" : "ml-[-10rem]"}`}>
+    <div
+      className={`flex flex-col max-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-white transition-all duration-300 ${
+        isSidebarOpen ? "ml-0" : "ml-[-10rem]"
+      }`}
+    >
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 md:px-6 py-4 md:py-5 shadow-md text-lg md:text-2xl font-bold tracking-wide flex justify-between items-center">
-        <span>🤖 AI Chat Assistant</span>
-        <span className="text-xs md:text-sm font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 px-3 md:px-4 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
+      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 py-4 shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+        <span className="text-base sm:text-lg md:text-2xl font-bold tracking-wide">
+          🤖 AI Chat Assistant
+        </span>
+        <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 px-3 py-1.5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center">
           👤 {userName}
         </span>
       </div>

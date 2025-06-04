@@ -6,12 +6,12 @@ import Login from "./auth/Login";
 import Layout from "./auth/Layout";
 import Loader from "./Components/Loader";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import '@ant-design/v5-patch-for-react-19';
+import "@ant-design/v5-patch-for-react-19";
 import Profile from "./Components/Profile";
 const App = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-    const formData = JSON.parse(localStorage.getItem("formData"));
+  const formData = JSON.parse(localStorage.getItem("formData"));
   const googleFormData = JSON.parse(localStorage.getItem("googleFormData"));
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,11 +25,31 @@ const App = () => {
     <div>
       <BrowserRouter>
         <div style={{ display: "flex", height: "100vh" }}>
-          <Layout isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+          <Layout
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+          />
           <div style={{ flex: 1 }}>
             <Routes>
-              <Route path="/chatHome" element={<ProtectedRoute><ChatHome  isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/></ProtectedRoute>} />
-              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route
+                path="/chatHome"
+                element={
+                  <ProtectedRoute>
+                    <ChatHome
+                      isSidebarOpen={isSidebarOpen}
+                      setIsSidebarOpen={setIsSidebarOpen}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Routes>
