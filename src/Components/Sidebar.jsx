@@ -27,12 +27,12 @@ const Sidebar = ({isSidebarOpen,setIsSidebarOpen}) => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+    const sidebarWidthClass = isSidebarOpen ? 'w-64 sm:w-64' : 'w-16 sm:w-24';
+
 
   return (
     <div
-      className={`${
-        isSidebarOpen ? 'w-64' : 'w-24'
-      } h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col relative transition-all duration-300 `}
+      className={`${isSidebarOpen ? 'w-64' : 'w-24'} h-screen bg-gradient-to-b from-white via-blue-50 to-indigo-100 shadow-xl flex flex-col relative transition-all duration-300 ${sidebarWidthClass}`}
     >
       {/* Logo / Title */}
       <div className="px-6 py-5 text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow whitespace-nowrap overflow-hidden">
