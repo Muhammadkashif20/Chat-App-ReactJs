@@ -61,7 +61,7 @@ const ChatHome = ({ isSidebarOpen }) => {
   }, []);
 
   return (
-    <div className={`flex flex-col h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-white transition-all duration-300 ${isSidebarOpen ? "ml-0" : "ml-[-10rem]"}`}>
+    <div className={`flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-white transition-all duration-300 ${isSidebarOpen ? "ml-0" : "ml-[-10rem]"}`}>
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 md:px-6 py-4 md:py-5 shadow-md text-lg md:text-2xl font-bold tracking-wide flex justify-between items-center">
         <span>🤖 AI Chat Assistant</span>
