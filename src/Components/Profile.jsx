@@ -11,7 +11,7 @@ const Profile = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`flex items-center justify-center min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
+      className={`flex items-center justify-center max-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
         isSidebarOpen ? "ml-0" : "ml-[-10rem]"
       }`}
     >
