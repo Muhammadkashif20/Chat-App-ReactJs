@@ -15,7 +15,7 @@ const Profile = ({ isSidebarOpen }) => {
         isSidebarOpen ? "ml-0" : "ml-[-10rem]"
       }`}
     >
-      <div className="max-h-screen w-full max-w-md sm:max-w-lg bg-white rounded-xl shadow-md overflow-hidden">
+      <div className=" w-full max-w-md sm:max-w-lg bg-white rounded-xl shadow-md overflow-hidden">
         {/* Profile Header */}
         <div className="relative h-28 sm:h-32 bg-gradient-to-r from-blue-400 to-indigo-500">
           <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
