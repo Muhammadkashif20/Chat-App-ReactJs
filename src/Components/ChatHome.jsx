@@ -22,6 +22,7 @@ const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
 
     setIsSending(true);
     const userMessage = { sender: "user", text: inputValue };
+    setMessages((prev) => [...(prev || []), userMessage]);
     const userInput = inputValue;
     setInputValue("");
 
@@ -35,9 +36,11 @@ const ChatHome = ({isSidebarOpen,setIsSidebarOpen}) => {
       const text = response.text || "No response received.";
       const aiMessage = { sender: "ai", text };
       console.log("AI Response:", aiMessage);
-      const allMessages=[...(messages||[]),userMessage,aiMessage]
-      setMessages(allMessages);
-      localStorage.setItem(`Chat-${userEmail}`, JSON.stringify(allMessages));
+      setMessages((prev)=>{
+        const updateMsg=[...(prev || []), aiMessage]
+        localStorage.setItem(`Chat-${userEmail}`, JSON.stringify(updateMsg));
+        return updateMsg;
+      })
     }   
     
     catch (error) {
