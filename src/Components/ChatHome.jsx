@@ -64,7 +64,7 @@ const ChatHome = ({ isSidebarOpen }) => {
       }`}
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 py-4 shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 py-5  shadow-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
         <span className="text-base sm:text-lg md:text-2xl font-bold tracking-wide">
           🤖 AI Chat Assistant
         </span>
