@@ -11,11 +11,11 @@ const Profile = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`flex items-center justify-center min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
+      className={`flex items-center justify-center h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
         isSidebarOpen ? "ml-0" : "ml-[-10rem]"
       }`}
     >
-      <div className=" w-full max-w-md sm:max-w-lg bg-white rounded-xl shadow-md overflow-hidden">
+      <div className=" w-full overflow-y-hidden max-w-md sm:max-w-lg bg-white rounded-xl shadow-md overflow-hidden">
         {/* Profile Header */}
         <div className="relative h-28 sm:h-32 bg-gradient-to-r from-blue-400 to-indigo-500">
           <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">

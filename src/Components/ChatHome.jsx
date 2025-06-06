@@ -59,7 +59,7 @@ const ChatHome = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`flex flex-col max-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-white transition-all duration-300 ${
+      className={`flex flex-col h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-white transition-all duration-300 ${
         isSidebarOpen ? "ml-0" : "ml-[-10rem]"
       }`}
     >
